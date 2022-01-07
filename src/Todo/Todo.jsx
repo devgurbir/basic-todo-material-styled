@@ -5,9 +5,22 @@ import Button from "@mui/material/Button";
 import { v4 as uuid } from "uuid";
 import TodoItem from "./TodoItem";
 
+const calculateCompletedTodos = (todoArr) => {
+  return todoArr.reduce(
+    (previous, el) => (el.status === true ? previous + 1 : previous),
+    0
+  );
+};
+
 const Todo = () => {
   const [todos, setTodos] = useState([]);
   const [showCompleted, setShowCompleted] = useState(false);
+
+  const styles = {
+    backgroundColor:
+      calculateCompletedTodos(todos) === todos.length ? "#2e7d32;" : "white",
+    color: calculateCompletedTodos(todos) === todos.length ? "white" : "grey"
+  };
 
   const addTodo = (title) => {
     setTodos([
@@ -21,12 +34,8 @@ const Todo = () => {
   };
 
   const toggleTodo = (id, status) => {
-    console.log("toggling", id);
     setTodos(
       todos.map((el) => {
-        console.log(el);
-        console.log("idEquals", id === el.id);
-        console.log("status", el.status);
         return id === el.id
           ? {
               ...el,
@@ -40,7 +49,7 @@ const Todo = () => {
   return (
     <Box sx={{ width: "300px", margin: "0 auto" }}>
       <TodoInput addTodo={addTodo} />
-      <Box mt={4}>
+      <Box sx={styles} mt={4}>
         {showCompleted
           ? todos
               ?.filter((el) => el.status === true)
