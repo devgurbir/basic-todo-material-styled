@@ -46,6 +46,10 @@ const Todo = () => {
     );
   };
 
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((el) => id !== el.id));
+  };
+
   return (
     <Box sx={{ width: "300px", margin: "0 auto" }}>
       <TodoInput addTodo={addTodo} />
@@ -57,6 +61,7 @@ const Todo = () => {
                 return (
                   <TodoItem
                     toggleTodo={toggleTodo}
+                    deleteTodo={deleteTodo}
                     title={t.title}
                     status={t.status}
                     key={t.id}
@@ -68,6 +73,7 @@ const Todo = () => {
               return (
                 <TodoItem
                   toggleTodo={toggleTodo}
+                  deleteTodo={deleteTodo}
                   title={t.title}
                   status={t.status}
                   key={t.id}
